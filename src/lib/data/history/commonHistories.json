@@ -1,0 +1,82 @@
+[
+    {
+        "condicion": "Diabetes",
+        "descripcion": "Una condición crónica caracterizada por niveles altos de azúcar (glucosa) en la sangre."
+    },
+    {
+        "condicion": "Hipertensión",
+        "descripcion": "Una condición en la que la fuerza de la sangre contra las paredes de las arterias es demasiado alta."
+    },
+    {
+        "condicion": "Enfermedad Cardíaca",
+        "descripcion": "Varios tipos de condiciones que afectan la función y estructura del corazón."
+    },
+    {
+        "condicion": "Asma",
+        "descripcion": "Una condición en la que las vías respiratorias de una persona se inflaman, se estrechan y producen moco adicional."
+    },
+    {
+        "condicion": "Enfermedad Pulmonar Obstructiva Crónica (EPOC)",
+        "descripcion": "Un grupo de enfermedades pulmonares que bloquean el flujo de aire y dificultan la respiración."
+    },
+    {
+        "condicion": "Cáncer",
+        "descripcion": "Una enfermedad en la que las células anormales se dividen de forma incontrolable y destruyen tejido corporal."
+    },
+    {
+        "condicion": "Artritis",
+        "descripcion": "Inflamación de las articulaciones que causa dolor y rigidez."
+    },
+    {
+        "condicion": "Enfermedad de Alzheimer",
+        "descripcion": "Una enfermedad progresiva que destruye la memoria y otras funciones mentales importantes."
+    },
+    {
+        "condicion": "Enfermedad Renal Crónica",
+        "descripcion": "Una condición caracterizada por una pérdida gradual de la función renal a lo largo del tiempo."
+    },
+    {
+        "condicion": "Accidente Cerebrovascular",
+        "descripcion": "Una condición en la que el flujo sanguíneo deficiente hacia el cerebro provoca la muerte celular."
+    },
+    {
+        "condicion": "Osteoporosis",
+        "descripcion": "Una condición en la que los huesos se vuelven débiles y frágiles."
+    },
+    {
+        "condicion": "Epilepsia",
+        "descripcion": "Un trastorno neurológico caracterizado por episodios repentinos de alteración sensorial, pérdida de consciencia o convulsiones."
+    },
+    {
+        "condicion": "Enfermedad Hepática",
+        "descripcion": "Varias condiciones que dañan el hígado y afectan su función."
+    },
+    {
+        "condicion": "VIH/SIDA",
+        "descripcion": "Una enfermedad del sistema inmunológico humano causada por la infección con el VIH."
+    },
+    {
+        "condicion": "Depresión",
+        "descripcion": "Un trastorno del estado de ánimo que causa una sensación persistente de tristeza y pérdida de interés."
+    },
+    {
+        "condicion": "Trastornos de Ansiedad",
+        "descripcion": "Un grupo de trastornos de salud mental caracterizados por sentimientos significativos de ansiedad y miedo."
+    },
+    {
+        "condicion": "Obesidad",
+        "descripcion": "Una condición en la que una persona ha acumulado tanta grasa corporal que puede tener un efecto negativo en su salud."
+    },
+    {
+        "condicion": "Enfermedad por Reflujo Gastroesofágico (ERGE)",
+        "descripcion": "Un trastorno digestivo crónico donde el ácido estomacal o la bilis irritan el revestimiento del esófago."
+    },
+    {
+        "condicion": "Trastornos de Tiroides",
+        "descripcion": "Condiciones que afectan la glándula tiroides, incluyendo hipotiroidismo e hipertiroidismo."
+    },
+    {
+        "condicion": "Esclerosis Múltiple",
+        "descripcion": "Una enfermedad en la que el sistema inmunológico ataca la cobertura protectora de los nervios."
+    }
+]
