@@ -16,7 +16,6 @@ const ModifyHistory = ({ selectedHistory, setPatientHistory, singleHistory, pati
         const index = patientHistory.findIndex(h => h._id === selectedHistory)
         if (index < 0) return
         const newArray = replaceObjectAtIndexImmutable(patientHistory, index, { historyTitle, historyDescription, _id: selectedHistory })
-        console.log("new array", newArray)
         setPatientHistory(newArray)
         setEditMode(false)
     }

@@ -19,6 +19,8 @@ export function calculateWaterBalance(ingress, egress, weightKg, adjustmentFacto
     const balance = totalIngress - totalEgress;
 
     return {
+        ingress,
+        egress,
         totalIngress,
         totalEgress,
         balance,  // positive balance indicates fluid retention, negative indicates loss

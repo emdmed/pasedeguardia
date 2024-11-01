@@ -11,7 +11,7 @@ const Patients = () => {
             sex: "F",
             weight: 88,
             age: 45,
-            hospitalizationReason: "What I want to do is just display it on any one side, so the above link is trying to display it on the bottom. (In other words, it doesn't matter if it's at the top, bottom, or anywhere else. It's just an example.)",
+            hospitalizationReason: "Ingresa en sala general por deshidratación secundaria a vómitos persistentes y diarrea en las últimas 48 horas",
             history: [
                 {
                     patientId: "Pac1",
@@ -27,7 +27,8 @@ const Patients = () => {
                     historyDescription: "atc2",
                     historyType: "Diabetes"
                 }
-            ]
+            ],
+            controls: []
         }
     ])
 

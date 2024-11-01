@@ -8,8 +8,6 @@ const AddHistory = ({ setPatientHistory, patientHistory, singleHistory, patient 
 
     const [historyDescription, setHistoryDescription] = useState(singleHistory?.historyDescription || "")
 
-    console.log("patient", patient)
-
     const handleSave = () => {
         if (historyTitle && historyDescription) {
             setPatientHistory([...patientHistory, { historyTitle, historyDescription, _id: new Date().getTime(), patientId: patient.patientId }])

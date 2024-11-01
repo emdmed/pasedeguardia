@@ -20,12 +20,17 @@ import { replaceObjectAtIndexImmutable } from "@/lib/helpers/arrayManipulation"
 import { Droplets } from "lucide-react"
 import ControlForms from "../controls/forms/controlForms"
 import EditPatient from "./editPatient"
+import ControlList from "../controls/controlList"
+import { Scale } from "lucide-react"
+import { DialogClose } from "@radix-ui/react-dialog"
 
 const PatientCard = ({ patient, setPatients, patients }) => {
 
     const [hospitalizationReason, setHospitalizationReason] = useState(patient.hospitalizationReason)
     const [patientHistory, setPatientHistory] = useState(patient.history)
     const [addControlMode, setAddControlMode] = useState()
+
+    const [toggleControlsModal, setToggleControlsModal] = useState(false)
 
     useEffect(() => {
         patient.history = patientHistory
@@ -98,26 +103,38 @@ const PatientCard = ({ patient, setPatients, patients }) => {
             <History setPatientHistory={setPatientHistory} patientHistory={patientHistory} />
         </CardContent>
         <CardContent>
-            <div className="flex items-center">
-                <span className="font-bold me-2">Controles</span>
-                <Dialog>
-                    <DialogTrigger asChild>
-                        <div>
-                            <Button variant="ghost" className="text-slate-700 hover:bg-slate-700 hover:text-white">
-                                <SquarePlus />
-                            </Button>
-                        </div>
-                    </DialogTrigger>
-                    <DialogContent className="bg-slate-100">
-                        <DialogTitle>Controles</DialogTitle>
-                        <DialogDescription>
-                            {!addControlMode && <div>
-                                <Button onClick={e => setAddControlMode("balance")} className="bg-slate-500 text-white w-full flex justify-between">Balance <Droplets /></Button>
-                            </div>}
-                            <ControlForms patient={patient} setAddControlMode={setAddControlMode} addControlMode={addControlMode} />
-                        </DialogDescription>
-                    </DialogContent>
-                </Dialog>
+            <div className="flex flex-col">
+                <div className="flex items-center">
+                    <span className="font-bold me-2">Controles</span>
+                    <Dialog onOpenChange={(isOpen) => setToggleControlsModal(isOpen)} open={toggleControlsModal}>
+                        <DialogTrigger asChild>
+                            <div>
+                                <Button onClick={e => setToggleControlsModal(true)} variant="ghost" className="text-slate-700 hover:bg-slate-700 hover:text-white">
+                                    <SquarePlus />
+                                </Button>
+                            </div>
+                        </DialogTrigger>
+                        <DialogContent className="bg-slate-100">
+                            <DialogTitle>Controles</DialogTitle>
+                            <DialogDescription>
+                                {!addControlMode && <div>
+                                    <Button onClick={e => {
+                                        setAddControlMode("balance")
+                                        setToggleControlsModal(true)
+                                    }} className="bg-cyan-600 text-white w-full flex justify-between my-1">Balance <Scale /></Button>
+                                    <Button onClick={e => {
+                                        setAddControlMode("clearance")
+                                        setToggleControlsModal(true)
+                                    }} className="bg-cyan-600 text-white w-full flex justify-between my-1">Clearance <Droplets /></Button>
+                                </div>}
+                                <ControlForms patients={patients} setPatients={setPatients} patient={patient} setAddControlMode={setAddControlMode} addControlMode={addControlMode} />
+                            </DialogDescription>
+                            <DialogClose onClick={e => setToggleControlsModal(false)}></DialogClose>
+                        </DialogContent>
+                    </Dialog>
+
+                </div>
+                <ControlList setToggleControlsModal={setToggleControlsModal} setAddControlMode={setAddControlMode} controls={patient?.controls} />
             </div>
         </CardContent>
     </Card>

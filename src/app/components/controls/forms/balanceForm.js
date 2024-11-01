@@ -5,15 +5,36 @@ import { PlusSquare } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { calculateWaterBalance } from "@/lib/controls/balance"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { replaceObjectAtIndexImmutable } from "@/lib/helpers/arrayManipulation"
 
-const Balance = ({ patient }) => {
-    console.log("Balance patient", patient)
+
+
+const Balance = ({ patient, patients, setPatients, control }) => {
     const [ingressValue, setIngressValue] = useState()
     const [egressValue, setEgressValue] = useState()
-    const [ingress, setIngress] = useState([])
-    const [egress, setEgress] = useState([])
+    const [ingress, setIngress] = useState(control?.result?.ingress || [])
+    const [egress, setEgress] = useState(control?.result?.egress || [])
     const [weight, setWeight] = useState(patient?.weight || "")
     const [result, setResult] = useState()
+
+    const saveControl = ({ id }) => {
+        const patientControls = patient.controls
+        //is there a balance control
+        const found = patientControls.find(control => control.id === id)
+
+        if (!found) {
+            patient.controls.push({ id, result })
+            const patientIndex = patients.findIndex(p => p._id === patient._id)
+            const newPatientArray = replaceObjectAtIndexImmutable(patients, patientIndex, { ...patient })
+            setPatients([...newPatientArray])
+        } else {
+            const controlIndex = patientControls.findIndex(c => c.id === id)
+            const newControlArray = replaceObjectAtIndexImmutable(patientControls, controlIndex, { id, result })
+            const patientIndex = patients.findIndex(p => p._id === patient._id)
+            const newPatientArray = replaceObjectAtIndexImmutable(patients, patientIndex, { ...patient, controls: newControlArray })
+            setPatients([...newPatientArray])
+        }
+    }
 
     const handleAddIngress = () => {
         if (ingressValue && !isNaN(ingressValue)) {
@@ -38,6 +59,12 @@ const Balance = ({ patient }) => {
         const result = calculateWaterBalance(ingress, egress, Number(weight))
         setResult(result)
     }, [egress, weight, ingress])
+
+    useEffect(() => {
+        if (result) {
+            saveControl({ id: "balance" })
+        }
+    }, [result])
 
 
     return <div className="flex flex-col px-2 py-3">
