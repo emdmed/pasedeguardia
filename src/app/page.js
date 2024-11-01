@@ -1,5 +1,6 @@
-import Patients from "./components/patients/patients";
+'use client'
 
+import Patients from "./components/patients/patients";
 
 export default function Home() {
   return (
