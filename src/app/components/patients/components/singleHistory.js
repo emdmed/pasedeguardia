@@ -8,10 +8,9 @@ const SingleHistory = ({ singleHistory, setSelectedHistory, selectedHistory }) =
 
     const setClass = () => {
         if(selectedHistory === singleHistory._id){
-            return "bg-slate-300 text-black"
-        } else {
-
             return ""
+        } else {
+            return "bg-slate-300 text-black"
         }
     }
 
