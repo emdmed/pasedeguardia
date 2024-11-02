@@ -47,7 +47,6 @@ export default function Home() {
           <AddPatient patients={patients} setPatients={setPatients} />
         </DialogContent>
       </Dialog>
-
     </div>
   );
 }
