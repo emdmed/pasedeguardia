@@ -34,16 +34,16 @@ const PatientCard = ({ patient, setPatients, patients }) => {
 
     useEffect(() => {
         patient.history = patientHistory
-        const index = patients.findIndex(p => patient.patientId === patient.history[0].patientId)
+        const index = patients.findIndex(p => p.patientId === patient.history[0]?.patientId)
         const newArray = replaceObjectAtIndexImmutable(patients, index, patient)
         setPatients(newArray)
-    }, [patientHistory, patient])
+    }, [patientHistory])
 
     const handleHospitalizationReasonChange = (e) => {
         setHospitalizationReason(e.target.value)
     }
 
-    return <Card className="bg-slate-100">
+    return <Card className="bg-slate-100 my-2">
         <CardHeader>
             <div className="flex items-center">
                 <span className="font-bold me-2">{patient.patientId}</span>
@@ -68,10 +68,12 @@ const PatientCard = ({ patient, setPatients, patients }) => {
             </div>
         </CardHeader>
         <CardContent>
-            <span className="font-bold">Motivo de internacion</span>
             <Dialog>
                 <DialogTrigger asChild>
-                    <p>{hospitalizationReason}</p>
+                    <div>
+                        <span className="font-bold">Motivo de internacion</span>
+                        <p>{hospitalizationReason}</p>
+                    </div>
                 </DialogTrigger>
                 <DialogContent>
                     <DialogTitle>Motivo de internacion</DialogTitle>

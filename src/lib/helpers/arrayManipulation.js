@@ -1,7 +1,7 @@
 export function replaceObjectAtIndexImmutable(array, index, newObject) {
     // Check if the index is within array bounds
     if (index < 0 || index >= array.length) {
-        throw new Error("Index out of bounds");
+        return array
     }
 
     // Return a new array with the updated object
@@ -15,7 +15,7 @@ export function replaceObjectAtIndexImmutable(array, index, newObject) {
 export function removeObjectAtIndexImmutable(array, index) {
     // Check if the index is within array bounds
     if (index < 0 || index >= array.length) {
-        throw new Error("Index out of bounds");
+        return array
     }
 
     // Return a new array without the object at the specified index

@@ -19,10 +19,15 @@ const EditPatient = ({ patient, patients, setPatients }) => {
         setPatients([...newArray])
     }
 
+    const handlePatientIdChange = (e) => {
+        const val = e.target.value
+        if (val.length < 5) setPatientId(val)
+    }
+
     return <div className="flex flex-col bg-slate-100">
         <div className="flex items-center my-1 bg-slate-200 p-2">
             <span className="font-bold w-1/2">Id del paciente</span>
-            <Input className="bg-slate-100" onChange={e => setPatientId(e.target.value)} value={patientId} />
+            <Input className="bg-slate-100" onChange={handlePatientIdChange} value={patientId} />
         </div>
         <div className="flex items-center my-1 bg-slate-200 p-2">
             <span className="font-bold w-1/2">Edad</span>

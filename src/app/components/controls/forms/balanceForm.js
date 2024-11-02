@@ -7,8 +7,6 @@ import { calculateWaterBalance } from "@/lib/controls/balance"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { replaceObjectAtIndexImmutable } from "@/lib/helpers/arrayManipulation"
 
-
-
 const Balance = ({ patient, patients, setPatients, control }) => {
     const [ingressValue, setIngressValue] = useState()
     const [egressValue, setEgressValue] = useState()
@@ -24,13 +22,13 @@ const Balance = ({ patient, patients, setPatients, control }) => {
 
         if (!found) {
             patient.controls.push({ id, result })
-            const patientIndex = patients.findIndex(p => p._id === patient._id)
+            const patientIndex = patients.findIndex(p => p.patientId === patient.patientId)
             const newPatientArray = replaceObjectAtIndexImmutable(patients, patientIndex, { ...patient })
             setPatients([...newPatientArray])
         } else {
             const controlIndex = patientControls.findIndex(c => c.id === id)
             const newControlArray = replaceObjectAtIndexImmutable(patientControls, controlIndex, { id, result })
-            const patientIndex = patients.findIndex(p => p._id === patient._id)
+            const patientIndex = patients.findIndex(p => p.patientId === patient.patientId)
             const newPatientArray = replaceObjectAtIndexImmutable(patients, patientIndex, { ...patient, controls: newControlArray })
             setPatients([...newPatientArray])
         }

@@ -18,13 +18,13 @@ const ClearanceForm = ({ patient, patients, setPatients }) => {
 
         if (!found) {
             patient.controls.push({ id, result })
-            const patientIndex = patients.findIndex(p => p._id === patient._id)
+            const patientIndex = patients.findIndex(p => p.patientId === patient.patientId)
             const newPatientArray = replaceObjectAtIndexImmutable(patients, patientIndex, { ...patient })
             setPatients([...newPatientArray])
         } else {
             const controlIndex = patientControls.findIndex(c => c.id === id)
             const newControlArray = replaceObjectAtIndexImmutable(patientControls, controlIndex, { id, result })
-            const patientIndex = patients.findIndex(p => p._id === patient._id)
+            const patientIndex = patients.findIndex(p => p.patientId === patient.patientId)
             const newPatientArray = replaceObjectAtIndexImmutable(patients, patientIndex, { ...patient, controls: newControlArray })
             setPatients([...newPatientArray])
         }
