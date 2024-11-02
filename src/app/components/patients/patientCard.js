@@ -3,7 +3,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { useEffect, useState } from "react"
 import History from "./components/history"
-import { SquarePlus, UserPen } from "lucide-react"
+import { Bed, SquarePlus, UserPen } from "lucide-react"
 import {
     Dialog,
     DialogContent,
@@ -30,6 +30,8 @@ const PatientCard = ({ patient, setPatients, patients }) => {
     const [patientHistory, setPatientHistory] = useState(patient.history)
     const [addControlMode, setAddControlMode] = useState()
 
+    const addButtonsClass = "text-slate-600 hover:bg-slate-100 hover:text-cyan-700"
+
     const [toggleControlsModal, setToggleControlsModal] = useState(false)
 
     useEffect(() => {
@@ -39,19 +41,35 @@ const PatientCard = ({ patient, setPatients, patients }) => {
         setPatients(newArray)
     }, [patientHistory])
 
+
+    useEffect(() => {
+        patient.history = patientHistory
+        const index = patients.findIndex(p => p.patientId === patient.patientId)
+        const newArray = replaceObjectAtIndexImmutable(patients, index, { ...patient, hospitalizationReason })
+        setPatients(newArray)
+    }, [hospitalizationReason])
+
     const handleHospitalizationReasonChange = (e) => {
         setHospitalizationReason(e.target.value)
     }
 
+    const clearHospitalizationReason = () => {
+        setHospitalizationReason("")
+    }
+
     return <Card className="bg-slate-100 my-2">
-        <CardHeader>
+        <CardHeader className="p-3">
             <div className="flex items-center">
                 <span className="font-bold me-2">{patient.patientId}</span>
                 <span className="text-slate-500">{patient.age}{patient.sex}</span>
+                <div className="flex mx-2 items-center">
+                    <Bed size={20} />
+                    <span className="mx-1">{patient?.location}</span>
+                </div>
                 <Dialog>
                     <DialogTrigger asChild>
                         <div>
-                            <Button variant="ghost">
+                            <Button variant="ghost" className={addButtonsClass}>
                                 <UserPen />
                             </Button>
                         </div>
@@ -67,11 +85,11 @@ const PatientCard = ({ patient, setPatients, patients }) => {
                 </Dialog>
             </div>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-3">
             <Dialog>
                 <DialogTrigger asChild>
-                    <div>
-                        <span className="font-bold">Motivo de internacion</span>
+                    <div className="hover:text-cyan-700" style={{ cursor: "pointer" }}>
+                        <span className="font-bold ">Motivo de internacion</span>
                         <p>{hospitalizationReason}</p>
                     </div>
                 </DialogTrigger>
@@ -79,17 +97,20 @@ const PatientCard = ({ patient, setPatients, patients }) => {
                     <DialogTitle>Motivo de internacion</DialogTitle>
                     <DialogDescription>
                         <Textarea onChange={handleHospitalizationReasonChange} style={{ height: 150 }} value={hospitalizationReason} />
+                        <div className="flex justify-end mt-2">
+                            <Button onClick={clearHospitalizationReason} variant="ghost">Clear</Button>
+                            </div>
                     </DialogDescription>
                 </DialogContent>
             </Dialog>
         </CardContent>
-        <CardContent>
+        <CardContent className="p-3">
             <div className="flex items-center">
-                <span className="font-bold me-2">Agregar antecedente</span>
+                <span className="font-bold me-2">Antecedentes</span>
                 <Dialog>
                     <DialogTrigger asChild>
                         <div>
-                            <Button variant="ghost" className="text-slate-700 hover:bg-slate-700 hover:text-white">
+                            <Button variant="ghost" className={addButtonsClass}>
                                 <SquarePlus />
                             </Button>
                         </div>
@@ -104,14 +125,14 @@ const PatientCard = ({ patient, setPatients, patients }) => {
             </div>
             <History setPatientHistory={setPatientHistory} patientHistory={patientHistory} />
         </CardContent>
-        <CardContent>
+        <CardContent className="p-3">
             <div className="flex flex-col">
                 <div className="flex items-center">
                     <span className="font-bold me-2">Controles</span>
                     <Dialog onOpenChange={(isOpen) => setToggleControlsModal(isOpen)} open={toggleControlsModal}>
                         <DialogTrigger asChild>
                             <div>
-                                <Button onClick={e => setToggleControlsModal(true)} variant="ghost" className="text-slate-700 hover:bg-slate-700 hover:text-white">
+                                <Button onClick={e => setToggleControlsModal(true)} variant="ghost" className={addButtonsClass}>
                                     <SquarePlus />
                                 </Button>
                             </div>

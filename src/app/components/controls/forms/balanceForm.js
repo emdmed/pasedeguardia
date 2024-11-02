@@ -96,11 +96,14 @@ const Balance = ({ patient, patients, setPatients, control }) => {
         </div>
         {result && <Card className="bg-slate-200 mt-3">
             <CardHeader>
-                <CardTitle className="text-slate-700">
+                <CardTitle className={result.balance > 0 ? "text-teal-700" : "text-pink-700"}>
                     Balance {result?.balance || "error"} ml
                 </CardTitle>
                 <CardDescription>
-                    Ingresos totales: {result?.totalIngress} ml, Egresos totales: {result?.totalEgress} ml
+                    Ingresos totales: {result?.totalIngress} ml
+                </CardDescription>
+                <CardDescription>
+                    Egresos totales: {result?.totalEgress} ml
                 </CardDescription>
                 <div className="text-slate-500 flex flex-col">
                     <small>Agua endogena: {result?.details?.endogenousWater} ml</small>

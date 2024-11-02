@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import Patients from "./components/patients/patients";
 import { PlusSquare, UserRound } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Dialog, DialogContent, DialogOverlay, DialogTitle, DialogTrigger } from "@radix-ui/react-dialog";
 import AddPatient from "./components/patients/addPatient";
 
@@ -11,35 +11,23 @@ export default function Home() {
 
   const [toggleAddPatientForm, setToggleAddPatientForm] = useState(false)
 
-  const [patients, setPatients] = useState([
-    {
-      patientId: "Pac1",
-      sex: "F",
-      weight: 88,
-      age: 45,
-      hospitalizationReason: "Ingresa en sala general por deshidratación secundaria a vómitos persistentes y diarrea en las últimas 48 horas",
-      history: [
-        {
-          patientId: "Pac1",
-          _id: 12345678,
-          historyTitle: "Hta",
-          historyDescription: "atc1",
-          historyType: "Hipertensión"
-        },
-        {
-          patientId: "Pac1",
-          _id: 46358,
-          historyTitle: "Dbt",
-          historyDescription: "atc2",
-          historyType: "Diabetes"
-        }
-      ],
-      controls: []
+  const [patients, setPatients] = useState([])
+
+  useEffect(() => {
+    const storedData = localStorage.getItem("patients")
+    if (storedData) {
+      setPatients(JSON.parse(storedData))
     }
-  ])
+  }, [])
 
+  useEffect(() => {
+    if (patients.length > 0) {
+      const patientString = JSON.stringify(patients)
+      console.log("patients characters", patientString.length)
+      localStorage.setItem("patients", patientString)
+    }
+  }, [patients])
 
-  console.log("patients", patients)
 
 
 
@@ -47,7 +35,7 @@ export default function Home() {
     <div className="bg-slate-200 h-screen">
       <div className="flex w-100 h-[40px] items-center border-black">
         <span className="font-bold mx-2">Pasedeguardia</span>
-        <Button onClick={e => setToggleAddPatientForm(true)} variant="ghost"><UserRound /> <PlusSquare /></Button>
+        <Button className="text-slate-700 hover:bg-slate-200 hover:text-cyan-600" onClick={e => setToggleAddPatientForm(true)} variant="ghost"><UserRound /> <PlusSquare /></Button>
       </div>
       <Patients patients={patients} setPatients={setPatients} />
       <Dialog open={toggleAddPatientForm} onOpenChange={setToggleAddPatientForm}>

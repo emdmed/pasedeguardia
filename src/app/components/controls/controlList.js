@@ -5,7 +5,7 @@ const ControlList = ({ controls, setToggleControlsModal, setAddControlMode }) =>
     return <div>
         {controls.map((control, index) => {
             if (control.id === "balance" && control.result) {
-                return <Card style={{ cursor: "pointer" }} key={index} className="bg-slate-100 mt-3" onClick={e => {
+                return <Card style={{ cursor: "pointer" }} key={index} className="bg-slate-100 mt-3 my-1" onClick={e => {
                     setToggleControlsModal(true)
                     setAddControlMode("balance")
                 }}>
@@ -14,7 +14,10 @@ const ControlList = ({ controls, setToggleControlsModal, setAddControlMode }) =>
                             Balance {control?.result?.balance || "error"} ml
                         </CardTitle>
                         <CardDescription>
-                            Ingresos totales: {control?.result?.totalIngress} ml, Egresos totales: {control?.result?.totalEgress} ml
+                            Ingresos totales: {control?.result?.totalIngress} ml
+                        </CardDescription>
+                        <CardDescription>
+                            Egresos totales: {control?.result?.totalEgress} ml
                         </CardDescription>
                         <div className="text-slate-500 flex flex-col">
                             <small>Agua endogena: {control?.result?.details?.endogenousWater} ml</small>
@@ -30,7 +33,7 @@ const ControlList = ({ controls, setToggleControlsModal, setAddControlMode }) =>
                     }}
                     style={{ cursor: "pointer" }}
                     key={index}
-                    className="bg-slate-100">
+                    className="bg-slate-100 my-1">
                     <CardHeader>
                         <CardTitle className="text-cyan-700">
                             Clearance {control?.result.toFixed(1)} ml/min

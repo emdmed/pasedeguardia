@@ -18,7 +18,7 @@ const History = ({ patientHistory, setPatientHistory }) => {
     }
 
     return <>
-        <div className="flex my-1">
+        <div className="flex my-1 overflow-auto scroll-container">
             {patientHistory.map(singleHistory => <SingleHistory selectedHistory={selectedHistory} setSelectedHistory={setSelectedHistory} key={singleHistory._id} singleHistory={singleHistory} />)}
         </div>
         {selectedHistory && <div className="flex w-100 justify-between p-2 items-center border-b my-2">
