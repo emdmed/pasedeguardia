@@ -1,11 +1,13 @@
 'use client'
 
+const VERSION = "0.1"
 import { Button } from "@/components/ui/button";
 import Patients from "./components/patients/patients";
 import { PlusSquare, UserRound } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Dialog, DialogContent, DialogOverlay, DialogTitle, DialogTrigger } from "@radix-ui/react-dialog";
 import AddPatient from "./components/patients/addPatient";
+
 
 export default function Home() {
 
@@ -33,9 +35,12 @@ export default function Home() {
 
   return (
     <div className="bg-slate-200 h-screen">
-      <div className="flex w-100 h-[40px] items-center border-black">
-        <span className="font-bold mx-2">Pasedeguardia</span>
-        <Button className="text-slate-700 hover:bg-slate-200 hover:text-cyan-600" onClick={e => setToggleAddPatientForm(true)} variant="ghost"><UserRound /> <PlusSquare /></Button>
+      <div className="flex w-100 h-[40px] items-center border-black justify-between">
+        <div className="flex items-center">
+          <span className="font-bold mx-2">Pasedeguardia </span>
+          <Button className="text-slate-700 hover:bg-slate-200 hover:text-cyan-600" onClick={e => setToggleAddPatientForm(true)} variant="ghost"><UserRound /> <PlusSquare /></Button>
+        </div>
+        <small className="text-slate-500 me-3">DEMO v{VERSION}</small>
       </div>
       <Patients patients={patients} setPatients={setPatients} />
       <Dialog open={toggleAddPatientForm} onOpenChange={setToggleAddPatientForm}>

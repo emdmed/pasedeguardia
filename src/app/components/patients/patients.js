@@ -1,6 +1,5 @@
 'use client'
 
-import { useState } from "react"
 import PatientCard from "./patientCard"
 
 const Patients = ({ patients, setPatients }) => {
