@@ -32,7 +32,7 @@ const ClearanceForm = ({ patient, patients, setPatients }) => {
 
 
     useEffect(() => {
-        if (creatinine && age && weight) {
+        if (creatinine && age && weight && !isNaN(creatinine) && creatinine > 0) {
             setResult(calculateCreatinineClearance(age, weight, creatinine, patient?.sex || "M"))
         }
     }, [creatinine, age, weight, patient])
