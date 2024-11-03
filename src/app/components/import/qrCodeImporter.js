@@ -75,7 +75,7 @@ function QRCodeImporter({ setToggleShareDialog }) {
 
   return (
     <div>
-      <span className='font-bold text-lg text-cyan-700'>Escanea el Qr nro {currentPart}</span>
+      <span className='font-bold text-lg text-cyan-700 my-3'>Escanea el Qr nro {currentPart}</span>
       {scanResult.length === currentPart && <span>Listo! Por favor escanea el proximo Qr</span>}
       <Scanner
         formats={["qr_code"]}
