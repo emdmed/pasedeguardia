@@ -27,20 +27,6 @@ function QRCodeImporter({ onDataComplete }) {
       console.log("QR code detected:", data); // Log the raw data from QR code
       setScanning(false); // Stop scanning once data is detected
 
-      const [header, content] = data.split(':');
-      const [_, part, total] = header.match(/part (\d+)\/(\d+)/) || [];
-      const parsedPart = parseInt(part, 10);
-      const parsedTotal = parseInt(total, 10);
-
-      if (parsedPart === currentPart && content) {
-        setScanResult(prev => [...prev, content]);
-        setCurrentPart(currentPart + 1);
-
-        if (scanResult.length + 1 === parsedTotal) {
-          const fullData = scanResult.join('') + content;
-          onDataComplete(fullData);
-        }
-      }
     }
   };
 
@@ -62,10 +48,11 @@ function QRCodeImporter({ onDataComplete }) {
         <p style={{ color: "red" }}>QR code detected, processing...</p>
       )}
       <Scanner
-        onDecode={handleScan}
+        onScan={handleScan}
         onError={handleError}
         facingMode="environment" // Use back camera if available
         style={{ width: '100%' }}
+        useDevices={devices => console.log("devices", devices)}
       />
       <p>Parts scanned: {scanResult.length}</p>
     </div>
