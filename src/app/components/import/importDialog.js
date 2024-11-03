@@ -13,9 +13,6 @@ const ImportDialog = ({setToggleShareDialog}) => {
         <CardContent>
             <QRCodeImporter setToggleShareDialog={setToggleShareDialog} setScanData={setScanData} />
         </CardContent>
-        <CardContent>
-            <Button onClick={e => setToggleShareDialog(false)}>Cancelar</Button>
-        </CardContent>
     </Card>
     </div>
 }
