@@ -61,7 +61,7 @@ function QRCodeImporter({ setToggleShareDialog }) {
         onError={handleError}
         onScan={handleScan}
         style={{ width: '100%' }}
-        constraints={{ facingMode: "environment" }} 
+        facingMode="rear" // Use back camera if available
       />
       <p>Parts scanned: {scanResult.length}</p>
       <Button disabled={scanning} onClick={e => setScanning(true)}>Proximo</Button>
