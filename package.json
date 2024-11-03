@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@babel/runtime": "^7.26.0",
     "@radix-ui/react-dialog": "^1.1.2",
     "@radix-ui/react-icons": "^1.3.1",
     "@radix-ui/react-label": "^2.1.0",
@@ -19,8 +20,11 @@
     "crypto-js": "^4.2.0",
     "lucide-react": "^0.454.0",
     "next": "14.2.16",
+    "qrcode.react": "^4.1.0",
     "react": "^18",
     "react-dom": "^18",
+    "react-qr-code": "^2.0.15",
+    "react-qr-scanner": "^1.0.0-alpha.11",
     "tailwind-merge": "^2.5.4",
     "tailwindcss-animate": "^1.0.7"
   },

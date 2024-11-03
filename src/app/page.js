@@ -12,6 +12,8 @@ import { Input } from "@/components/ui/input";
 import { decryptString, encryptString } from "@/lib/encryption/browserEncryption";
 import { HardDrive } from "lucide-react";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
+import ImportDialog from "./components/import/importDialog";
+import ExportDialog from "./components/export /exportDialog";
 
 export default function Home() {
 
@@ -21,6 +23,8 @@ export default function Home() {
   const [patients, setPatients] = useState([])
   const [encryptedStoredData, setEncryptedStoredData] = useState()
   const [isDecrypted, setIsDecripted] = useState(false)
+  const [toggleShareDialog, setToggleShareDialog] = useState(false)
+  const [toggleExportDialog, setToggleExportDialog] = useState(false)
 
   useEffect(() => {
     const storedData = localStorage.getItem("patients")
@@ -47,6 +51,12 @@ export default function Home() {
   }
 
   useEffect(() => {
+    if (encryptedStoredData && encryptedStoredData.length > 0) {
+      console.log("stored length", encryptedStoredData.length)
+    }
+  }, [encryptedStoredData])
+
+  useEffect(() => {
     if (patients.length > 0) {
       const patientString = JSON.stringify(patients)
 
@@ -54,7 +64,7 @@ export default function Home() {
     }
   }, [patients, validSecretKey])
 
-  if (!isDecrypted) return <div className="bg-slate-200 h-screen flex flex-col items-center justify-center">
+  if (!isDecrypted && !toggleShareDialog) return <div className="bg-slate-200 h-screen flex flex-col items-center justify-center">
     <span className="font-bold" style={{ fontSize: 40 }}>Pasedeguardia</span>
     <Card className="bg-slate-100 mx-2 my-2">
       <CardHeader>
@@ -80,12 +90,14 @@ export default function Home() {
         <div className="flex justify-end">
           <Button className="mx-1 bg-teal-700" onClick={e => setValidSecretKey(secretKey)}>Continuar</Button>
           <Button className="mx-1 bg-pink-700" onClick={reset}>Reiniciar</Button>
+          <Button onClick={e => setToggleShareDialog(true)}>Importar</Button>
         </div>
       </CardContent>
-
     </Card>
-
   </div>
+
+
+  if (!isDecrypted && toggleShareDialog) return <ImportDialog setToggleShareDialog={setToggleShareDialog} />
 
   return (
     <div className="bg-slate-200 h-screen">
@@ -93,10 +105,12 @@ export default function Home() {
         <div className="flex items-center">
           <span className="font-bold mx-2">Pasedeguardia </span>
           <Button className="text-slate-700 hover:bg-slate-200 hover:text-cyan-600" onClick={e => setToggleAddPatientForm(true)} variant="ghost"><UserRound /> <PlusSquare /></Button>
+          <Button onClick={e => setToggleExportDialog(true)}>Share</Button>
         </div>
         <small className="text-slate-500 me-3">DEMO v{VERSION}</small>
       </div>
-      <Patients patients={patients} setPatients={setPatients} />
+      {!toggleExportDialog && <Patients patients={patients} setPatients={setPatients} />}
+      {toggleExportDialog && encryptedStoredData && <ExportDialog encryptedData={encryptedStoredData} setToggleShareDialog={setToggleShareDialog} />}
       <Dialog open={toggleAddPatientForm} onOpenChange={setToggleAddPatientForm}>
         <DialogOverlay className="fixed inset-0 bg-black bg-opacity-50" />
         <DialogContent
