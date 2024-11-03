@@ -5,8 +5,8 @@ const QRCodeChunk = ({ data, index, totalChunks }) => {
     return (
         <div>
             <p>QR Code {index + 1} of {totalChunks}</p>
-            <div className='p-3'>
-                <QRCode value={data} size={256} />
+            <div style={{padding: 20}}>
+                <QRCode  value={data} size={256} />
             </div>
         </div>
     );
