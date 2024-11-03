@@ -45,7 +45,7 @@ function QRCodeImporter({ onDataComplete }) {
   };
 
   if (!cameraAvailable) {
-    return <p>No se econtro la camara</p>;
+    return <p>No se encontró la cámara</p>;
   }
 
   return (
@@ -56,6 +56,7 @@ function QRCodeImporter({ onDataComplete }) {
         onError={handleError}
         onScan={handleScan}
         style={{ width: '100%' }}
+        facingMode="environment" // Use back camera
       />
       <p>Partes escaneadas: {scanResult.length}</p>
     </div>
