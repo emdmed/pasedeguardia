@@ -7,31 +7,85 @@ import { PlusSquare, UserRound } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Dialog, DialogContent, DialogOverlay, DialogTitle, DialogTrigger } from "@radix-ui/react-dialog";
 import AddPatient from "./components/patients/addPatient";
-
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { decryptString, encryptString } from "@/lib/encryption/browserEncryption";
+import { HardDrive } from "lucide-react";
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 
 export default function Home() {
 
   const [toggleAddPatientForm, setToggleAddPatientForm] = useState(false)
-
+  const [secretKey, setSecretKey] = useState("")
+  const [validSecretKey, setValidSecretKey] = useState("")
   const [patients, setPatients] = useState([])
+  const [encryptedStoredData, setEncryptedStoredData] = useState()
+  const [isDecrypted, setIsDecripted] = useState(false)
 
   useEffect(() => {
     const storedData = localStorage.getItem("patients")
-    if (storedData) {
-      setPatients(JSON.parse(storedData))
+    if (storedData) setEncryptedStoredData(storedData)
+
+    if (storedData && validSecretKey) {
+      const decrypted = decryptString(storedData, validSecretKey)
+      console.log("decrypted", decrypted)
+
+      if (decrypted) {
+        setIsDecripted(true)
+        setPatients(JSON.parse(decrypted))
+      }
     }
-  }, [])
+
+    if (!storedData && validSecretKey) {
+      setIsDecripted(true)
+    }
+  }, [validSecretKey])
+
+  const reset = () => {
+    localStorage.clear()
+    setEncryptedStoredData(false)
+  }
 
   useEffect(() => {
     if (patients.length > 0) {
       const patientString = JSON.stringify(patients)
-      console.log("patients characters", patientString.length)
-      localStorage.setItem("patients", patientString)
+
+      localStorage.setItem("patients", encryptString(patientString, validSecretKey))
     }
-  }, [patients])
+  }, [patients, validSecretKey])
 
+  if (!isDecrypted) return <div className="bg-slate-200 h-screen flex flex-col items-center justify-center">
+    <span className="font-bold" style={{ fontSize: 40 }}>Pasedeguardia</span>
+    <Card className="bg-slate-100 mx-2 my-2">
+      <CardHeader>
+        <CardTitle>
+          Ingrese su clave
+        </CardTitle>
+        <CardDescription>Si olvidas tu clave, deberás reiniciar y se perderán todos tus datos guardados.</CardDescription>
+      </CardHeader>
+      <CardContent>
+        {encryptedStoredData && <Alert className="bg-slate-100 border-black">
+          <HardDrive className="text-pink-700 " />
+          <AlertTitle className="ms-2">
+            Atencion
+          </AlertTitle>
+          <AlertDescription className="ms-2 w-full">
+            Hay datos guardados en este dispositivo
+          </AlertDescription>
+        </Alert>}
+        {validSecretKey && !isDecrypted && <CardContent className="flex justify-center items-center py-3">
+          <span className="font-bold text-pink-700">Clave invalida !</span>
+        </CardContent>}
+        <Input placeholder="Ingrese su clave..." type="password" className="bg-white my-2" value={secretKey} onChange={e => setSecretKey(e.target.value)} />
+        <div className="flex justify-end">
+          <Button className="mx-1 bg-teal-700" onClick={e => setValidSecretKey(secretKey)}>Continuar</Button>
+          <Button className="mx-1 bg-pink-700" onClick={reset}>Reiniciar</Button>
+        </div>
+      </CardContent>
 
+    </Card>
 
+  </div>
 
   return (
     <div className="bg-slate-200 h-screen">

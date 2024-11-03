@@ -24,8 +24,6 @@ const EditPatient = ({ patient, patients, setPatients }) => {
         setPatients([...newArray])
     }
 
-
-
     const handlePatientIdChange = (e) => {
         const val = e.target.value
 
