@@ -48,6 +48,7 @@ function QRCodeImporter({ onDataComplete }) {
         <p style={{ color: "red" }}>QR code detected, processing...</p>
       )}
       <Scanner
+        formats={["qr_code"]}
         onScan={handleScan}
         onError={handleError}
         facingMode="environment" // Use back camera if available
