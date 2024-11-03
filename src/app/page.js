@@ -97,7 +97,7 @@ export default function Home() {
   </div>
 
 
-  if (!isDecrypted && toggleShareDialog) return <ImportDialog setToggleShareDialog={setToggleShareDialog} />
+  if (!isDecrypted && toggleShareDialog) return <ImportDialog setEncryptedStoredData={setEncryptedStoredData} setToggleShareDialog={setToggleShareDialog} />
 
   return (
     <div className="bg-slate-200 h-screen">
