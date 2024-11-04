@@ -68,6 +68,12 @@ export default function Home() {
     }
   }, [patients, validSecretKey])
 
+  const onKeyDown = (e) => {
+    if (e.key === "Enter") {
+      setValidSecretKey(secretKey)
+    }
+  }
+
   const loginMessage = () => {
     if (encryptedStoredData) return "Si olvidaste tu clave, deberás reiniciar y se perderán todos tus datos guardados."
     return "Establece una palabra secreta para cifrar los datos de tus pacientes, no te la olvides!"
@@ -96,7 +102,7 @@ export default function Home() {
         {validSecretKey && !isDecrypted && <CardContent className="flex justify-center items-center py-3">
           <span className="font-bold text-pink-700">Clave invalida !</span>
         </CardContent>}
-        <Input placeholder="Ingrese su clave..." type="password" className="bg-white my-2" value={secretKey} onChange={e => setSecretKey(e.target.value)} />
+        <Input placeholder="Ingrese su clave..." type="password" className="bg-white my-2" value={secretKey} onKeyDown={onKeyDown} onChange={e => setSecretKey(e.target.value)} />
         <div className="flex justify-end pt-3">
           <Button className="mx-1 bg-teal-700" onClick={e => setValidSecretKey(secretKey)}>Continuar</Button>
           <Button className="mx-1 bg-pink-700" onClick={reset}>Reiniciar</Button>
