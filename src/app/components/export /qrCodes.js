@@ -20,13 +20,13 @@ const QRCodeDisplay = ({ encryptedData }) => {
           onClick={() => setCurrentChunk((prev) => Math.max(prev - 1, 0))}
           disabled={currentChunk === 0}
         >
-          Previous
+          Anterior
         </Button>
         <Button
           onClick={() => setCurrentChunk((prev) => Math.min(prev + 1, chunkedData.length - 1))}
           disabled={currentChunk === chunkedData.length - 1}
         >
-          Next
+          Próximo
         </Button>
       </div>
     </div>

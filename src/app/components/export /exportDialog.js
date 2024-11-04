@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import QRCodeDisplay from "./qrCodes"
 
-const ExportDialog = ({setToggleShareDialog, encryptedData}) => {
+const ExportDialog = ({setToggleExportDialog, encryptedData}) => {
     console.log("ExportDialog encryptedData", encryptedData)
     return <div className="bg-slate-200 h-screen flex flex-col items-center justify-center">
         <Card>
@@ -16,8 +16,8 @@ const ExportDialog = ({setToggleShareDialog, encryptedData}) => {
             <CardContent>
                 <QRCodeDisplay encryptedData={encryptedData}/>
             </CardContent>
-        <CardContent>
-            <Button onClick={e => setToggleShareDialog(false)}>Cerrar</Button>
+        <CardContent className="flex justify-end">
+            <Button className="bg-pink-700" onClick={e => setToggleExportDialog(false)}>Cerrar</Button>
         </CardContent>
     </Card>
     </div>

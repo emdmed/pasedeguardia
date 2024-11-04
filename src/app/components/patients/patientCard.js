@@ -3,7 +3,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { useEffect, useState } from "react"
 import History from "./components/history"
-import { Bed, SquarePlus, UserPen } from "lucide-react"
+import { Bed, SquarePlus, UserPen, UserRound } from "lucide-react"
 import {
     Dialog,
     DialogContent,
@@ -23,6 +23,7 @@ import EditPatient from "./editPatient"
 import ControlList from "../controls/controlList"
 import { Scale } from "lucide-react"
 import { DialogClose } from "@radix-ui/react-dialog"
+import { Badge } from "@/components/ui/badge"
 
 const PatientCard = ({ patient, setPatients, patients }) => {
 
@@ -60,19 +61,17 @@ const PatientCard = ({ patient, setPatients, patients }) => {
     return <Card className="bg-slate-100 my-2">
         <CardHeader className="p-3">
             <div className="flex items-center">
-                <span className="font-bold me-2">{patient.patientId}</span>
-                <span className="text-slate-500">{patient.age}{patient.sex}</span>
-                <div className="flex mx-2 items-center">
-                    <Bed size={20} />
-                    <span className="mx-1">{patient?.location}</span>
-                </div>
+
                 <Dialog>
                     <DialogTrigger asChild>
-                        <div>
-                            <Button variant="ghost" className={addButtonsClass}>
-                                <UserPen />
-                            </Button>
-                        </div>
+                        <Badge
+                            style={{ cursor: "pointer" }}
+                            className="rounded-full flex items-center bg-cyan-700 p-2 space-x-1 px-3 me-2"
+                        >
+                            <UserRound size={20} className="mr-1" />
+                            <span className="font-bold text-white">{patient.patientId}</span>
+                            <span className="text-slate-300">{patient.age}{patient.sex}</span>
+                        </Badge>
                     </DialogTrigger>
                     <DialogContent className="bg-slate-100">
                         <DialogTitle>
@@ -83,6 +82,10 @@ const PatientCard = ({ patient, setPatients, patients }) => {
                         </DialogDescription>
                     </DialogContent>
                 </Dialog>
+                {patient.location && <div className="flex mx-2 items-center">
+                    <Bed size={20} />
+                    <span className="mx-1">{patient.location}</span>
+                </div>}
             </div>
         </CardHeader>
         <CardContent className="p-3">
@@ -99,7 +102,7 @@ const PatientCard = ({ patient, setPatients, patients }) => {
                         <Textarea onChange={handleHospitalizationReasonChange} style={{ height: 150 }} value={hospitalizationReason} />
                         <div className="flex justify-end mt-2">
                             <Button onClick={clearHospitalizationReason} variant="ghost">Clear</Button>
-                            </div>
+                        </div>
                     </DialogDescription>
                 </DialogContent>
             </Dialog>
