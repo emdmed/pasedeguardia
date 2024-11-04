@@ -14,10 +14,11 @@ const AddPatient = ({ patients, setPatients }) => {
     const [patientAge, setPatientAge] = useState("")
     const [location, setLocation] = useState("")
     const [sex, setSex] = useState("F")
+    const [addedAlert, setAddedAlert] = useState(false)
 
     const onSave = () => {
         if (!patientId) return
-        
+
         setPatients([...patients, {
             patientId: patientId,
             sex: sex,
@@ -27,7 +28,24 @@ const AddPatient = ({ patients, setPatients }) => {
             history: [],
             controls: []
         }])
+
+        setPatientId("")
+        setPatientAge("")
+        setPatientWeight("")
+        setLocation("")
+        setSex("F")
+        setAddedAlert(true)
     }
+
+    useEffect(() => {
+        if (addedAlert) {
+            const timer = setTimeout(() => {
+                setAddedAlert(false)
+            }, 2000);
+
+            return () => clearTimeout(timer)
+        }
+    }, [addedAlert])
 
     const onSwitchChange = (checked) => {
         if (checked) {
@@ -66,7 +84,8 @@ const AddPatient = ({ patients, setPatients }) => {
 
         <div className="flex justify-end my-2 w-full">
             <Button onClick={onSave} variant="ghost">
-                <Save />
+                {addedAlert && <span className="text-teal-700 font-bold">Agregado!</span>}
+                {!addedAlert && <Save />}
             </Button>
         </div>
     </div>
