@@ -144,9 +144,6 @@ export default function Home() {
           <Button className="text-slate-700 hover:bg-slate-200 hover:text-cyan-600" onClick={e => setToggleAddPatientForm(true)} variant="ghost"><UserRound /> <PlusSquare /></Button>
           <Button variant="ghost" className="text-slate-700 hover:bg-slate-200 hover:text-cyan-600" onClick={e => setToggleExportDialog(true)}><UserRound /><Share2 /></Button>
         </div>
-        <div style={{position: "absolute", bottom: 0}} className="flex items-center p-2 justify-end w-full">
-          <small className="text-slate-500 me-3 flex items-center text-xs"><MailIcon className="me-2" size={17} />enrique.darderes@gmail.com</small>
-        </div>
       </div>
       {!toggleExportDialog && <Patients patients={patients} setPatients={setPatients} />}
       {toggleExportDialog && encryptedStoredData && <ExportDialog encryptedData={encryptedStoredData} setToggleExportDialog={setToggleExportDialog} />}
