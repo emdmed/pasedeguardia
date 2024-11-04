@@ -81,7 +81,7 @@ export default function Home() {
 
   if (!isDecrypted && !toggleShareDialog) return <div className="bg-slate-200 h-screen flex flex-col items-center justify-center">
     <span className="font-bold" style={{ fontSize: 40 }}>Pasedeguardia</span>
-    <Image className="flex" width={500} height={50} alt="Description of the icon" src="/images/mainlogo.svg" />
+    <Image className="flex" width={350} height={50} alt="Description of the icon" src="/images/mainlogo.svg" />
     {!toggleHelp && <Card className="bg-slate-100 mx-2 my-2">
       <CardHeader>
         <CardTitle>
