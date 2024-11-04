@@ -24,6 +24,7 @@ import ControlList from "../controls/controlList"
 import { Scale } from "lucide-react"
 import { DialogClose } from "@radix-ui/react-dialog"
 import { Badge } from "@/components/ui/badge"
+import { Folder, Stethoscope, NotebookPen } from "lucide-react"
 
 const PatientCard = ({ patient, setPatients, patients }) => {
 
@@ -92,7 +93,10 @@ const PatientCard = ({ patient, setPatients, patients }) => {
             <Dialog>
                 <DialogTrigger asChild>
                     <div className="hover:text-cyan-700" style={{ cursor: "pointer" }}>
-                        <span className="font-bold ">Motivo de internacion</span>
+                        <div className="flex items-center">
+                            <Stethoscope />
+                            <span className="font-bold mx-2">Motivo de internacion</span>
+                        </div>
                         <p>{hospitalizationReason}</p>
                     </div>
                 </DialogTrigger>
@@ -109,7 +113,8 @@ const PatientCard = ({ patient, setPatients, patients }) => {
         </CardContent>
         <CardContent className="p-3">
             <div className="flex items-center">
-                <span className="font-bold me-2">Antecedentes</span>
+                <Folder />
+                <span className="font-bold mx-2">Antecedentes  </span>
                 <Dialog>
                     <DialogTrigger asChild>
                         <div>
@@ -131,7 +136,8 @@ const PatientCard = ({ patient, setPatients, patients }) => {
         <CardContent className="p-3">
             <div className="flex flex-col">
                 <div className="flex items-center">
-                    <span className="font-bold me-2">Controles</span>
+                    <NotebookPen />
+                    <span className="font-bold mx-2">Controles</span>
                     <Dialog onOpenChange={(isOpen) => setToggleControlsModal(isOpen)} open={toggleControlsModal}>
                         <DialogTrigger asChild>
                             <div>
