@@ -76,7 +76,7 @@ const PatientCard = ({ patient, setPatients, patients }) => {
     const setPriorityCardStyle = () => {
         if (priority === "high") return { card: "bg-slate-100 border-pink-700 my-2", badge: "rounded-full flex items-center bg-pink-700 p-2 space-x-1 px-3 me-2", button: "text-pink-700" }
         if (priority === "medium") return { card: "bg-slate-100 border-yellow-600 my-2", badge: "rounded-full flex items-center bg-yellow-600 p-2 space-x-1 px-3 me-2", button: "text-yellow-600" }
-        return { card: "bg-slate-100 my-2", badge: "rounded-full flex items-center bg-cyan-700 p-2 space-x-1 px-3 me-2", button: "" }
+        return { card: "bg-slate-100 my-2 border-cyan-700", badge: "rounded-full flex items-center bg-cyan-700 p-2 space-x-1 px-3 me-2", button: "" }
     }
 
     const cardStyle = setPriorityCardStyle()
