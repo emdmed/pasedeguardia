@@ -9,16 +9,19 @@ function QRCodeImporter({ setToggleShareDialog }) {
   const [currentPart, setCurrentPart] = useState(1);
   const [scannedCode, setScannedCode] = useState()
   const [error, setError] = useState('')
+  const [scanStatus, setScanStatus] = useState({scanned: [], total: []})
 
   useEffect(() => {
     if (error) {
-      const timer = setTimeout(() => {
+      const timer = setTimeout(() => { 
         setError("")
       }, 1000);
 
       return () => clearTimeout(timer)
     }
   }, [error])
+
+  console.log("scanStatus", scanStatus)
 
   useEffect(() => {
     if (!scannedCode) return
@@ -28,6 +31,8 @@ function QRCodeImporter({ setToggleShareDialog }) {
       setError("Proximo qr por favor....")
     } else {
       setScanResult(prev => [...prev, scannedCodeObject.data])
+      const newScanned = [...scanStatus.scanned, scannedCodeObject.index]
+      setScanStatus({...scanStatus, scanned: newScanned, total: scannedCodeObject.total})
       setCurrentPart(prev => ++prev)
     }
   }, [scannedCode])

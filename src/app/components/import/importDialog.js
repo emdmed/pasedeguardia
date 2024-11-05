@@ -2,7 +2,6 @@
 
 import { Card, CardContent } from "@/components/ui/card"
 import QRCodeImporter from "./qrCodeImporter"
-import { Button } from "@/components/ui/button"
 import { useState } from "react"
 
 const ImportDialog = ({setToggleShareDialog}) => {
