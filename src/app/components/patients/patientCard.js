@@ -31,7 +31,7 @@ const PatientCard = ({ patient, setPatients, patients }) => {
     const [hospitalizationReason, setHospitalizationReason] = useState(patient.hospitalizationReason)
     const [patientHistory, setPatientHistory] = useState(patient.history)
     const [addControlMode, setAddControlMode] = useState()
-    const [priority, setPriority] = useState()
+    const [priority, setPriority] = useState(patient.priority || null)
 
     const addButtonsClass = "text-slate-600 hover:bg-slate-100 hover:text-cyan-700"
 
@@ -155,7 +155,7 @@ const PatientCard = ({ patient, setPatients, patients }) => {
                     </DialogContent>
                 </Dialog>
             </div>
-            <History setPatientHistory={setPatientHistory} patientHistory={patientHistory} />
+            {patientHistory && patientHistory.length > 0 && <History setPatientHistory={setPatientHistory} patientHistory={patientHistory} />}
         </CardContent>
         <CardContent className="p-3">
             <div className="flex flex-col">
