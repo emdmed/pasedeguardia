@@ -24,3 +24,13 @@ export function removeObjectAtIndexImmutable(array, index) {
         ...array.slice(index + 1)
     ];
 }
+
+export function insertAtIndex(index, obj, array) {
+    if (index < 0 || index > array.length) {
+      throw new Error("Index out of bounds");
+    }
+  
+    const newArray = [...array]; // Create a copy to avoid mutating the original array
+    newArray.splice(index, 0, obj); // Insert the object at the specified index
+    return newArray;
+  }

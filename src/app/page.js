@@ -33,6 +33,7 @@ export default function Home() {
 
   useEffect(() => {
     const storedData = localStorage.getItem("patients")
+
     if (storedData) setEncryptedStoredData(storedData)
 
     if (storedData && validSecretKey) {
@@ -48,18 +49,12 @@ export default function Home() {
     if (!storedData && validSecretKey) {
       setIsDecripted(true)
     }
-  }, [validSecretKey])
+  }, [validSecretKey, toggleShareDialog])
 
   const reset = () => {
     localStorage.clear()
     setEncryptedStoredData(false)
   }
-
-  useEffect(() => {
-    if (encryptedStoredData && encryptedStoredData.length > 0) {
-      console.log("stored length", encryptedStoredData.length)
-    }
-  }, [encryptedStoredData])
 
   useEffect(() => {
     if (patients.length > 0) {
@@ -78,7 +73,6 @@ export default function Home() {
       setValidSecretKey(secretKey)
     }
   }
-  console.log("sortState", sortState)
 
   const handleSorting = () => {
     if (!sortState) {

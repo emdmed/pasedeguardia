@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Scanner } from '@yudiel/react-qr-scanner';
 import { Button } from '@/components/ui/button';
+import { replaceObjectAtIndexImmutable } from '@/lib/helpers/arrayManipulation';
 
 function QRCodeImporter({ setToggleShareDialog }) {
   const [cameraAvailable, setCameraAvailable] = useState(false);
@@ -9,11 +10,11 @@ function QRCodeImporter({ setToggleShareDialog }) {
   const [currentPart, setCurrentPart] = useState(1);
   const [scannedCode, setScannedCode] = useState()
   const [error, setError] = useState('')
-  const [scanStatus, setScanStatus] = useState({scanned: [], total: []})
+  const [scanStatus, setScanStatus] = useState({ scanned: [], total: [] })
 
   useEffect(() => {
     if (error) {
-      const timer = setTimeout(() => { 
+      const timer = setTimeout(() => {
         setError("")
       }, 1000);
 
@@ -21,28 +22,34 @@ function QRCodeImporter({ setToggleShareDialog }) {
     }
   }, [error])
 
-  console.log("scanStatus", scanStatus)
+  console.log("scanStatus", scanStatus, "scanResult", scanResult)
 
   useEffect(() => {
     if (!scannedCode) return
-
     const scannedCodeObject = JSON.parse(scannedCode)
+
+    if (scanResult.length === 0) {
+      setScanResult(new Array(scannedCodeObject.total))
+      return
+    }
+
     if (scanResult.includes(scannedCodeObject.data)) {
       setError("Proximo qr por favor....")
     } else {
-      setScanResult(prev => [...prev, scannedCodeObject.data])
+      const newScanResult = replaceObjectAtIndexImmutable(scanResult, scannedCodeObject.index, scannedCodeObject.data)
+      setScanResult([...newScanResult])
       const newScanned = [...scanStatus.scanned, scannedCodeObject.index]
-      setScanStatus({...scanStatus, scanned: newScanned, total: scannedCodeObject.total})
+      setScanStatus({ ...scanStatus, scanned: newScanned, total: scannedCodeObject.total })
       setCurrentPart(prev => ++prev)
     }
   }, [scannedCode])
 
 
   useEffect(() => {
-    if(scanResult.length === scanStatus.total){
+    if (scanResult.filter(value => value).length === scanStatus.total) {
       saveData()
     }
-  }, [scanResult])
+  }, [scanResult, scanStatus])
 
   useEffect(() => {
     async function checkCamera() {
@@ -78,14 +85,23 @@ function QRCodeImporter({ setToggleShareDialog }) {
     setToggleShareDialog(false)
   }
 
+  const getPercentageScanned = () => {
+    if (!scanStatus || scanStatus.scanned.length === 0) return 0
+    return (100 + ((scanStatus.scanned.length - scanStatus.total) / scanStatus.total) * 100)
+  }
+
+  console.log("getPercentageScanned", getPercentageScanned())
+
   if (!cameraAvailable) {
     return <p>No camera found.</p>;
   }
 
   return (
     <div>
-      <span className='font-bold text-lg text-cyan-700 my-3'>Escanea el Qr nro {currentPart}</span>
-      {scanResult.length === currentPart && <span>Listo! Por favor escanea el proximo Qr</span>}
+      <div className='flex flex-col'>
+        <span className='font-bold text-lg text-cyan-700 my-2'>Progreso {getPercentageScanned()}%</span>
+        <small className='my-1 text-slate-600'>Esta ventana se cerrará automáticamente una vez que todos los códigos sean escaneados con éxito</small>
+      </div>
       <Scanner
         formats={["qr_code"]}
         onScan={handleScan}
