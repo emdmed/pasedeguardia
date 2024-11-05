@@ -1,6 +1,7 @@
 'use client'
 
-const VERSION = "0.1"
+const VERSION = "0.2"
+
 import { Button } from "@/components/ui/button";
 import Patients from "./components/patients/patients";
 import { PlusSquare, UserRound } from "lucide-react";
@@ -15,8 +16,7 @@ import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import ImportDialog from "./components/import/importDialog";
 import ExportDialog from "./components/export /exportDialog";
 import Image from "next/image";
-import { Share2 } from "lucide-react";
-import { MailIcon } from "lucide-react";
+import { Share2, ArrowDownUp } from "lucide-react";
 
 export default function Home() {
 
@@ -29,6 +29,7 @@ export default function Home() {
   const [toggleShareDialog, setToggleShareDialog] = useState(false)
   const [toggleExportDialog, setToggleExportDialog] = useState(false)
   const [toggleHelp, setToggleHelp] = useState(false)
+  const [sortState, setSortState] = useState()
 
   useEffect(() => {
     const storedData = localStorage.getItem("patients")
@@ -68,9 +69,22 @@ export default function Home() {
     }
   }, [patients, validSecretKey])
 
+  useEffect(() => {
+    if (sortState === "priority") setPatients([...patients].sort((a, b) => a.priority - b.priority))
+  }, [sortState])
+
   const onKeyDown = (e) => {
     if (e.key === "Enter") {
       setValidSecretKey(secretKey)
+    }
+  }
+  console.log("sortState", sortState)
+
+  const handleSorting = () => {
+    if (!sortState) {
+      setSortState("priority")
+    } else {
+      setSortState()
     }
   }
 
@@ -147,9 +161,12 @@ export default function Home() {
         <div className="flex items-center">
           <span className="font-bold mx-2">Pasedeguardia </span>
           <small className="text-slate-500 me-3 text-xs">v{VERSION}</small>
-          <Button style={{position: "fixed", bottom: 0, right: 0, opacity: 0.7}} className="text-slate-100 bg-slate-500 hover:bg-slate-200 hover:text-cyan-600 m-3 rounded-full drop-shadow-md" onClick={e => setToggleAddPatientForm(true)} variant="ghost"><UserRound /> <PlusSquare /></Button>
+          <Button style={{ position: "fixed", bottom: 0, right: 0, opacity: 0.7 }} className="text-slate-100 bg-slate-500 hover:bg-slate-200 hover:text-cyan-600 m-3 rounded-full drop-shadow-md" onClick={e => setToggleAddPatientForm(true)} variant="ghost"><UserRound /> <PlusSquare /></Button>
         </div>
-        <Button variant="ghost" className="text-slate-700 hover:bg-slate-200 hover:text-cyan-600 mx-1" onClick={e => setToggleExportDialog(true)}><UserRound /><Share2 /></Button>
+        <div>
+          <Button variant="ghost" className="text-slate-700 hover:bg-slate-200 hover:text-cyan-600 mx-1" onClick={handleSorting} ><ArrowDownUp /></Button>
+          <Button variant="ghost" className="text-slate-700 hover:bg-slate-200 hover:text-cyan-600 mx-1" onClick={e => setToggleExportDialog(true)}><UserRound /><Share2 /></Button>
+        </div>
       </div>
       {!toggleExportDialog && <Patients patients={patients} setPatients={setPatients} />}
       {toggleExportDialog && encryptedStoredData && <ExportDialog encryptedData={encryptedStoredData} setToggleExportDialog={setToggleExportDialog} />}

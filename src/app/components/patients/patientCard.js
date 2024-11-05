@@ -31,7 +31,7 @@ const PatientCard = ({ patient, setPatients, patients }) => {
     const [hospitalizationReason, setHospitalizationReason] = useState(patient.hospitalizationReason)
     const [patientHistory, setPatientHistory] = useState(patient.history)
     const [addControlMode, setAddControlMode] = useState()
-    const [priority, setPriority] = useState(patient.priority || null)
+    const [priority, setPriority] = useState(patient.priority || 3)
 
     const addButtonsClass = "text-slate-600 hover:bg-slate-100 hover:text-cyan-700"
 
@@ -68,14 +68,14 @@ const PatientCard = ({ patient, setPatients, patients }) => {
     }
 
     const togglePriority = () => {
-        if (!priority) setPriority("high")
-        if (priority === "high") setPriority("medium")
-        if (priority === "medium") setPriority(null)
+        if (priority !== 1 && priority !== 2) setPriority(1)
+        if (priority === 1) setPriority(2)
+        if (priority === 2) setPriority(3)
     }
 
     const setPriorityCardStyle = () => {
-        if (priority === "high") return { card: "bg-slate-100 border-pink-700 my-2", badge: "rounded-full flex items-center bg-pink-700 p-2 space-x-1 px-3 me-2", button: "text-pink-700" }
-        if (priority === "medium") return { card: "bg-slate-100 border-yellow-600 my-2", badge: "rounded-full flex items-center bg-yellow-600 p-2 space-x-1 px-3 me-2", button: "text-yellow-600" }
+        if (priority === 1) return { card: "bg-slate-100 border-pink-700 my-2", badge: "rounded-full flex items-center bg-pink-700 p-2 space-x-1 px-3 me-2", button: "text-pink-700" }
+        if (priority === 2) return { card: "bg-slate-100 border-yellow-600 my-2", badge: "rounded-full flex items-center bg-yellow-600 p-2 space-x-1 px-3 me-2", button: "text-yellow-600" }
         return { card: "bg-slate-100 my-2 border-cyan-700", badge: "rounded-full flex items-center bg-cyan-700 p-2 space-x-1 px-3 me-2", button: "" }
     }
 
