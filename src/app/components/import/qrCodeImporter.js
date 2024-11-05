@@ -10,7 +10,6 @@ function QRCodeImporter({ setToggleShareDialog }) {
   const [scannedCode, setScannedCode] = useState()
   const [error, setError] = useState('')
 
-
   useEffect(() => {
     if (error) {
       const timer = setTimeout(() => {
@@ -24,10 +23,11 @@ function QRCodeImporter({ setToggleShareDialog }) {
   useEffect(() => {
     if (!scannedCode) return
 
-    if (scanResult.includes(scannedCode)) {
+    const scannedCodeObject = JSON.parse(scannedCode)
+    if (scanResult.includes(scannedCodeObject.data)) {
       setError("Proximo qr por favor....")
     } else {
-      setScanResult(prev => [...prev, scannedCode])
+      setScanResult(prev => [...prev, scannedCodeObject.data])
       setCurrentPart(prev => ++prev)
     }
   }, [scannedCode])
@@ -47,8 +47,6 @@ function QRCodeImporter({ setToggleShareDialog }) {
     }
     checkCamera();
   }, []);
-
-  console.log("scanResult", scanResult)
 
   const handleScan = (data) => {
     console.log("data", data[0].rawValue)
