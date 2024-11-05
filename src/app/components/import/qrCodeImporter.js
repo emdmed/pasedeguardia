@@ -39,6 +39,12 @@ function QRCodeImporter({ setToggleShareDialog }) {
 
 
   useEffect(() => {
+    if(scanResult.length === scanStatus.total){
+      saveData()
+    }
+  }, [scanResult])
+
+  useEffect(() => {
     async function checkCamera() {
       try {
         const devices = await navigator.mediaDevices.enumerateDevices();
