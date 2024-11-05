@@ -41,7 +41,7 @@ const PatientCard = ({ patient, setPatients, patients }) => {
         patient.history = patientHistory
         const index = patients.findIndex(p => p.patientId === patient.history[0]?.patientId)
         const newArray = replaceObjectAtIndexImmutable(patients, index, patient)
-        setPatients(newArray)
+        setPatients([...newArray])
     }, [patientHistory])
 
 
@@ -49,14 +49,14 @@ const PatientCard = ({ patient, setPatients, patients }) => {
         patient.history = patientHistory
         const index = patients.findIndex(p => p.patientId === patient.patientId)
         const newArray = replaceObjectAtIndexImmutable(patients, index, { ...patient, hospitalizationReason })
-        setPatients(newArray)
+        setPatients([...newArray])
     }, [hospitalizationReason])
 
     useEffect(() => {
         patient.priority = priority
         const index = patients.findIndex(p => p.patientId === patient.patientId)
         const newArray = replaceObjectAtIndexImmutable(patients, index, { ...patient, priority })
-        setPatients(newArray)
+        setPatients([...newArray])
     }, [priority])
 
     const handleHospitalizationReasonChange = (e) => {
@@ -74,9 +74,9 @@ const PatientCard = ({ patient, setPatients, patients }) => {
     }
 
     const setPriorityCardStyle = () => {
-        if (priority === 1) return { card: "bg-slate-100 border-pink-700 my-2", badge: "rounded-full flex items-center bg-pink-700 p-2 space-x-1 px-3 me-2", button: "text-pink-700" }
-        if (priority === 2) return { card: "bg-slate-100 border-yellow-600 my-2", badge: "rounded-full flex items-center bg-yellow-600 p-2 space-x-1 px-3 me-2", button: "text-yellow-600" }
-        return { card: "bg-slate-100 my-2 border-cyan-700", badge: "rounded-full flex items-center bg-cyan-700 p-2 space-x-1 px-3 me-2", button: "" }
+        if (priority === 1) return { card: "bg-slate-100 border-pink-700 border-4 my-2", badge: "rounded-full flex items-center bg-pink-700 p-2 space-x-1 px-3 me-2", button: "text-pink-700" }
+        if (priority === 2) return { card: "bg-slate-100 border-4 border-yellow-600 my-2", badge: "rounded-full flex items-center bg-yellow-600 p-2 space-x-1 px-3 me-2", button: "text-yellow-600" }
+        return { card: "bg-slate-100 border-4 my-2 border-cyan-700", badge: "rounded-full flex items-center bg-cyan-700 p-2 space-x-1 px-3 me-2", button: "text-cyan-700" }
     }
 
     const cardStyle = setPriorityCardStyle()
