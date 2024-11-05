@@ -24,13 +24,14 @@ import ControlList from "../controls/controlList"
 import { Scale } from "lucide-react"
 import { DialogClose } from "@radix-ui/react-dialog"
 import { Badge } from "@/components/ui/badge"
-import { Folder, Stethoscope, NotebookPen } from "lucide-react"
+import { Folder, Stethoscope, NotebookPen, RotateCw } from "lucide-react"
 
 const PatientCard = ({ patient, setPatients, patients }) => {
 
     const [hospitalizationReason, setHospitalizationReason] = useState(patient.hospitalizationReason)
     const [patientHistory, setPatientHistory] = useState(patient.history)
     const [addControlMode, setAddControlMode] = useState()
+    const [priority, setPriority] = useState()
 
     const addButtonsClass = "text-slate-600 hover:bg-slate-100 hover:text-cyan-700"
 
@@ -51,6 +52,13 @@ const PatientCard = ({ patient, setPatients, patients }) => {
         setPatients(newArray)
     }, [hospitalizationReason])
 
+    useEffect(() => {
+        patient.priority = priority
+        const index = patients.findIndex(p => p.patientId === patient.patientId)
+        const newArray = replaceObjectAtIndexImmutable(patients, index, { ...patient, priority })
+        setPatients(newArray)
+    }, [priority])
+
     const handleHospitalizationReasonChange = (e) => {
         setHospitalizationReason(e.target.value)
     }
@@ -59,34 +67,50 @@ const PatientCard = ({ patient, setPatients, patients }) => {
         setHospitalizationReason("")
     }
 
-    return <Card className="bg-slate-100 my-2">
-        <CardHeader className="p-3">
-            <div className="flex items-center">
+    const togglePriority = () => {
+        if (!priority) setPriority("high")
+        if (priority === "high") setPriority("medium")
+        if (priority === "medium") setPriority(null)
+    }
 
-                <Dialog>
-                    <DialogTrigger asChild>
-                        <Badge
-                            style={{ cursor: "pointer" }}
-                            className="rounded-full flex items-center bg-cyan-700 p-2 space-x-1 px-3 me-2"
-                        >
-                            <UserRound size={20} className="mr-1" />
-                            <span className="font-bold text-white">{patient.patientId}</span>
-                            <span className="text-slate-300">{patient.age}{patient.sex}</span>
-                        </Badge>
-                    </DialogTrigger>
-                    <DialogContent className="bg-slate-100">
-                        <DialogTitle>
-                            Paciente
-                        </DialogTitle>
-                        <DialogDescription>
-                            <EditPatient patients={patients} setPatients={setPatients} patient={patient} />
-                        </DialogDescription>
-                    </DialogContent>
-                </Dialog>
-                {patient.location && <div className="flex mx-2 items-center">
-                    <Bed size={20} />
-                    <span className="mx-1">{patient.location}</span>
-                </div>}
+    const setPriorityCardStyle = () => {
+        if (priority === "high") return { card: "bg-slate-100 border-pink-700 my-2", badge: "rounded-full flex items-center bg-pink-700 p-2 space-x-1 px-3 me-2", button: "text-pink-700" }
+        if (priority === "medium") return { card: "bg-slate-100 border-yellow-600 my-2", badge: "rounded-full flex items-center bg-yellow-600 p-2 space-x-1 px-3 me-2", button: "text-yellow-600" }
+        return { card: "bg-slate-100 my-2", badge: "rounded-full flex items-center bg-cyan-700 p-2 space-x-1 px-3 me-2", button: "" }
+    }
+
+    const cardStyle = setPriorityCardStyle()
+
+    return <Card className={cardStyle.card} style={{ maxWidth: 600 }}>
+        <CardHeader className="p-3">
+            <div className="flex items-center justify-between">
+                <div className="flex">
+                    <Dialog>
+                        <DialogTrigger asChild>
+                            <Badge
+                                style={{ cursor: "pointer" }}
+                                className={cardStyle.badge}
+                            >
+                                <UserRound size={20} className="mr-1" />
+                                <span className="font-bold text-white">{patient.patientId}</span>
+                                <span className="text-slate-300">{patient.age}{patient.sex}</span>
+                            </Badge>
+                        </DialogTrigger>
+                        <DialogContent className="bg-slate-100">
+                            <DialogTitle>
+                                Paciente
+                            </DialogTitle>
+                            <DialogDescription>
+                                <EditPatient patients={patients} setPatients={setPatients} patient={patient} />
+                            </DialogDescription>
+                        </DialogContent>
+                    </Dialog>
+                    {patient.location && <div className="flex mx-2 items-center">
+                        <Bed size={20} />
+                        <span className="mx-1">{patient.location}</span>
+                    </div>}
+                </div>
+                <Button variant="ghost" className={cardStyle.button} onClick={togglePriority}>Prioridad <RotateCw size={20} /></Button>
             </div>
         </CardHeader>
         <CardContent className="p-3">
