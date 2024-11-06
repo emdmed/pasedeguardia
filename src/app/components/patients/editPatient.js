@@ -2,7 +2,7 @@
 
 import { Input } from "@/components/ui/input"
 import { useEffect, useState } from "react"
-import { Save } from "lucide-react"
+import { Save, Trash2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { replaceObjectAtIndexImmutable } from "@/lib/helpers/arrayManipulation"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
@@ -24,6 +24,13 @@ const EditPatient = ({ patient, patients, setPatients }) => {
         setPatients([...newArray])
     }
 
+    const onDelete = (patientId) => {
+        const confirm = window.confirm("¿Querés borrar este paciente?")
+        if (!confirm) return
+        const newPatients = patients.filter(p => p.patientId !== patientId)
+        setPatients([...newPatients])
+    }
+
     const handlePatientIdChange = (e) => {
         const val = e.target.value
 
@@ -41,7 +48,7 @@ const EditPatient = ({ patient, patients, setPatients }) => {
 
     return <div className="flex flex-col bg-slate-100">
         {error && <Alert variant="destructive" className="bg-slate-100">
-            <TriangleAlert className="text-pink-700 "/>
+            <TriangleAlert className="text-pink-700 " />
             <AlertTitle className="ms-2">
                 {error.title}
             </AlertTitle>
@@ -68,6 +75,9 @@ const EditPatient = ({ patient, patients, setPatients }) => {
         <div className="flex justify-end my-2 w-full">
             <Button onClick={onSave} variant="ghost">
                 <Save />
+            </Button>
+            <Button variant="ghost" className="text-pink-700" onClick={e => onDelete(patient.patientId)}>
+                <Trash2 />
             </Button>
         </div>
     </div>
